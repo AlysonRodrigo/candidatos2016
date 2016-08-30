@@ -5,9 +5,23 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import br.com.lucianomedeiros.candidatos2016.ws.ServiceGenerator;
+import br.com.lucianomedeiros.candidatos2016.ws.TSEClient;
+import br.com.lucianomedeiros.candidatos2016.ws.model.Municipio;
+import br.com.lucianomedeiros.candidatos2016.ws.model.RetornoMunicipios;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,14 +31,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        TextView textView = (TextView) findViewById(R.id.text);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+        fab.setOnClickListener(view -> {
+            TSEClient client = ServiceGenerator.createService(TSEClient.class);
+            Call<RetornoMunicipios> call = client.listarMunicipios("PE");
+            call.enqueue(new Callback<RetornoMunicipios>() {
+                @Override
+                public void onResponse(Call<RetornoMunicipios> call, Response<RetornoMunicipios> response) {
+                    if (response.isSuccessful()) {
+                        List<Municipio> municipios = response.body().getMunicipios();
+                        StringBuilder sb = new StringBuilder();
+                        for (Municipio municipio : municipios) {
+                            sb.append(", ").append(municipio.getNome());
+                        }
+                        textView.setText(sb.toString());
+                    } else {
+                        Snackbar.make(view, "Retorno com problemas", Snackbar.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RetornoMunicipios> call, Throwable t) {
+                    Snackbar.make(view, "Erro ao consultar municípios", Snackbar.LENGTH_LONG).show();
+                    t.printStackTrace();
+                }
+            });
         });
     }
 
