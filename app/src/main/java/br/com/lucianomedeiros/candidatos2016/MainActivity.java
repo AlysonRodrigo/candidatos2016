@@ -3,6 +3,10 @@ package br.com.lucianomedeiros.candidatos2016;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -15,6 +19,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import br.com.lucianomedeiros.candidatos2016.ui.fragments.EstadosFragment;
 import br.com.lucianomedeiros.candidatos2016.ws.ServiceGenerator;
 import br.com.lucianomedeiros.candidatos2016.ws.TSEClient;
 import br.com.lucianomedeiros.candidatos2016.ws.model.Municipio;
@@ -31,34 +36,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        TextView textView = (TextView) findViewById(R.id.text);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-            TSEClient client = ServiceGenerator.createService(TSEClient.class);
-            Call<RetornoMunicipios> call = client.listarMunicipios("PE");
-            call.enqueue(new Callback<RetornoMunicipios>() {
-                @Override
-                public void onResponse(Call<RetornoMunicipios> call, Response<RetornoMunicipios> response) {
-                    if (response.isSuccessful()) {
-                        List<Municipio> municipios = response.body().getMunicipios();
-                        StringBuilder sb = new StringBuilder();
-                        for (Municipio municipio : municipios) {
-                            sb.append(", ").append(municipio.getNome());
-                        }
-                        textView.setText(sb.toString());
-                    } else {
-                        Snackbar.make(view, "Retorno com problemas", Snackbar.LENGTH_LONG).show();
-                    }
-                }
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager()));
 
-                @Override
-                public void onFailure(Call<RetornoMunicipios> call, Throwable t) {
-                    Snackbar.make(view, "Erro ao consultar municípios", Snackbar.LENGTH_LONG).show();
-                    t.printStackTrace();
-                }
-            });
-        });
+//        TSEClient client = ServiceGenerator.createService(TSEClient.class);
+//        Call<RetornoMunicipios> call = client.listarMunicipios("PE");
+//        call.enqueue(new Callback<RetornoMunicipios>() {
+//            @Override
+//            public void onResponse(Call<RetornoMunicipios> call, Response<RetornoMunicipios> response) {
+//                if (response.isSuccessful()) {
+//                    List<Municipio> municipios = response.body().getMunicipios();
+//                    StringBuilder sb = new StringBuilder();
+//                    for (Municipio municipio : municipios) {
+//                        sb.append(", ").append(municipio.getNome());
+//                    }
+//                    textView.setText(sb.toString());
+//                } else {
+//                    Snackbar.make(view, "Retorno com problemas", Snackbar.LENGTH_LONG).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<RetornoMunicipios> call, Throwable t) {
+//                Snackbar.make(view, "Erro ao consultar municípios", Snackbar.LENGTH_LONG).show();
+//                t.printStackTrace();
+//            }
+//
+//        });
     }
 
     @Override
@@ -80,5 +85,22 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    class PageAdapter extends FragmentStatePagerAdapter {
+
+        public PageAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return EstadosFragment.newInstance();
+        }
+
+        @Override
+        public int getCount() {
+            return 1;
+        }
     }
 }
