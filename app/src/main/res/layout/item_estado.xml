@@ -11,7 +11,10 @@
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="180dp">
+        android:layout_height="148dp"
+        android:background="@color/teal_300"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true">
 
         <TextView
             android:id="@+id/sigla"
@@ -20,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="-16dp"
             android:layout_gravity="center"
+            android:textColor="@android:color/white"
             android:text="@{estado.sigla}"
             tools:text="PE"/>
 
@@ -45,6 +49,7 @@
                 android:layout_gravity="center_vertical"
                 android:padding="@dimen/half_margin"
                 android:text="@{estado.descricao}"
+                android:textColor="@android:color/white"
                 tools:text="Pernambuco"/>
         </LinearLayout>
 

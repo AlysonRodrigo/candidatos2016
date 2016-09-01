@@ -1,13 +1,16 @@
 package br.com.lucianomedeiros.candidatos2016.ui.adapters;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import br.com.lucianomedeiros.candidatos2016.EstadoActivity;
 import br.com.lucianomedeiros.candidatos2016.databinding.ItemEstadoBinding;
 import br.com.lucianomedeiros.candidatos2016.ui.model.Estado;
 import br.com.lucianomedeiros.candidatos2016.util.Constantes;
@@ -29,9 +32,15 @@ public class EstadosAdapter extends RecyclerView.Adapter<EstadosAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Estado estado = Constantes.ESTADOS[position];
+        final Estado estado = Constantes.ESTADOS[position];
         holder.binding.setEstado(estado);
         holder.binding.executePendingBindings();
+        holder.binding.frame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.getContext().startActivity(new Intent(v.getContext(), EstadoActivity.class));
+            }
+        });
     }
 
     @Override
