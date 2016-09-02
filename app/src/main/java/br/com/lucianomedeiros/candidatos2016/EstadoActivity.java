@@ -2,71 +2,62 @@ package br.com.lucianomedeiros.candidatos2016;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 
 import br.com.lucianomedeiros.candidatos2016.databinding.ActivityEstadoBinding;
+import br.com.lucianomedeiros.candidatos2016.ui.adapters.MunicipiosAdapter;
 import br.com.lucianomedeiros.candidatos2016.ui.model.Estado;
+import br.com.lucianomedeiros.candidatos2016.util.Constantes;
+import br.com.lucianomedeiros.candidatos2016.ws.ServiceGenerator;
+import br.com.lucianomedeiros.candidatos2016.ws.TSEClient;
+import br.com.lucianomedeiros.candidatos2016.ws.model.RetornoMunicipios;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EstadoActivity extends AppCompatActivity {
 
-    ActivityEstadoBinding binding;
-    Estado estado = new Estado("PE", "Pernambuco");
+    public static final String ESTADO = "ESTADO";
 
-    TabPagerAdapter adapter;
+    ActivityEstadoBinding binding;
+    Estado estado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_estado);
         setSupportActionBar(binding.toolbar);
-        setTitle(estado.getDescricao());
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        adapter = new TabPagerAdapter(getSupportFragmentManager());
-        binding.viewPager.setAdapter(adapter);
-        binding.tabLayout.setupWithViewPager(binding.viewPager);
+        estado = Constantes.ESTADOS[getIntent().getIntExtra(ESTADO, 0)];
+        binding.setEstado(estado);
+        binding.refreshLayout.setEnabled(false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.recyclerView.setLayoutManager(layoutManager);
+        binding.recyclerView.setHasFixedSize(true);
+        binding.executePendingBindings();
+
+        loadMunicipios();
     }
 
-    private class TabPagerAdapter extends FragmentStatePagerAdapter {
-
-        public TabPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch(position){
-                case 0:
-                default:
-                    return new Fragment();
-                case 1:
-                    return new Fragment();
-                case 2:
-                    return new Fragment();
+    private void loadMunicipios() {
+        Call<RetornoMunicipios> call = ServiceGenerator.createService(TSEClient.class).listarMunicipios(estado.getSigla());
+        binding.refreshLayout.setRefreshing(true);
+        call.enqueue(new Callback<RetornoMunicipios>() {
+            @Override
+            public void onResponse(Call<RetornoMunicipios> call, Response<RetornoMunicipios> response) {
+                binding.refreshLayout.setRefreshing(false);
+                if (response.isSuccessful()) {
+                    binding.recyclerView.setAdapter(new MunicipiosAdapter(response.body().getMunicipios()));
+                }
             }
-        }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                default:
-                    return getString(R.string.prefeito);
-                case 1:
-                    return getString(R.string.vice);
-                case 2:
-                    return getString(R.string.vereador);
+            @Override
+            public void onFailure(Call<RetornoMunicipios> call, Throwable t) {
+                binding.refreshLayout.setRefreshing(false);
             }
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
+        });
     }
-
 }

@@ -40,30 +40,6 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(new PageAdapter(getSupportFragmentManager()));
 
-//        TSEClient client = ServiceGenerator.createService(TSEClient.class);
-//        Call<RetornoMunicipios> call = client.listarMunicipios("PE");
-//        call.enqueue(new Callback<RetornoMunicipios>() {
-//            @Override
-//            public void onResponse(Call<RetornoMunicipios> call, Response<RetornoMunicipios> response) {
-//                if (response.isSuccessful()) {
-//                    List<Municipio> municipios = response.body().getMunicipios();
-//                    StringBuilder sb = new StringBuilder();
-//                    for (Municipio municipio : municipios) {
-//                        sb.append(", ").append(municipio.getNome());
-//                    }
-//                    textView.setText(sb.toString());
-//                } else {
-//                    Snackbar.make(view, "Retorno com problemas", Snackbar.LENGTH_LONG).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<RetornoMunicipios> call, Throwable t) {
-//                Snackbar.make(view, "Erro ao consultar municípios", Snackbar.LENGTH_LONG).show();
-//                t.printStackTrace();
-//            }
-//
-//        });
     }
 
     @Override

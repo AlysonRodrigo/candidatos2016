@@ -19,4 +19,12 @@ public class ImageBinding {
                 .placeholder(R.drawable.ic_insert_photo)
                 .into(imageView);
     }
+
+    @BindingAdapter({"android:src", "alpha"})
+    public static void setImageUrl(ImageView imageView, String url, float alpha) {
+        Picasso.with(imageView.getContext())
+                .load(url)
+                .transform(new AlphaTransformation(alpha))
+                .into(imageView);
+    }
 }
