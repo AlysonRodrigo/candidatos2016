@@ -29,6 +29,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.com.lucianomedeiros.candidatos2016.MainActivity" />
         </activity>
+        <activity
+            android:name=".MunicipioActivity"
+            android:label="@string/title_activity_municipio"
+            android:parentActivityName=".EstadoActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.lucianomedeiros.candidatos2016.EstadoActivity" />
+        </activity>
     </application>
 
 </manifest>

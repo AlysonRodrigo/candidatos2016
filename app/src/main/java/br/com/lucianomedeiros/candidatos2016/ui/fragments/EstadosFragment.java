@@ -33,7 +33,7 @@ public class EstadosFragment extends Fragment {
         FragmentEstadosBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_estados, container, false);
         binding.recyclerView.setHasFixedSize(true);
         binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        binding.recyclerView.setAdapter(new EstadosAdapter());
+        binding.recyclerView.setAdapter(new EstadosAdapter(getActivity()));
 
         return binding.getRoot();
     }

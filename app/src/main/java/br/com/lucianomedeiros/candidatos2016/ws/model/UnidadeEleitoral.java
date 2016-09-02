@@ -1,27 +1,24 @@
 package br.com.lucianomedeiros.candidatos2016.ws.model;
 
-import org.parceler.Parcel;
-
 /**
- * Created by 08140905402 on 30/08/2016.
+ * Created by 08140905402 on 02/09/2016.
  */
-@Parcel(Parcel.Serialization.BEAN)
-public class Municipio {
+public class UnidadeEleitoral {
 
-    private long id;
+    private Long id;
     private String sigla;
     private String nome;
-//    private Object regiao;
-//    private Object cargos;
+    private Object regiao;
+    private Object cargos;
     private String codigo;
     private boolean capital;
-//    private Object estado;
+    private String estado;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -41,21 +38,21 @@ public class Municipio {
         this.nome = nome;
     }
 
-//    public Object getRegiao() {
-//        return regiao;
-//    }
-//
-//    public void setRegiao(Object regiao) {
-//        this.regiao = regiao;
-//    }
-//
-//    public Object getCargos() {
-//        return cargos;
-//    }
-//
-//    public void setCargos(Object cargos) {
-//        this.cargos = cargos;
-//    }
+    public Object getRegiao() {
+        return regiao;
+    }
+
+    public void setRegiao(Object regiao) {
+        this.regiao = regiao;
+    }
+
+    public Object getCargos() {
+        return cargos;
+    }
+
+    public void setCargos(Object cargos) {
+        this.cargos = cargos;
+    }
 
     public String getCodigo() {
         return codigo;
@@ -73,11 +70,11 @@ public class Municipio {
         this.capital = capital;
     }
 
-//    public Object getEstado() {
-//        return estado;
-//    }
-//
-//    public void setEstado(Object estado) {
-//        this.estado = estado;
-//    }
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 }

@@ -16,6 +16,15 @@
         android:foreground="?attr/selectableItemBackground"
         android:clickable="true">
 
+        <ImageView
+            android:id="@+id/bandeira"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@{estado.url}"
+            android:transitionName="bandeira"
+            app:alpha="@{0.6f}"/>
+
         <TextView
             android:id="@+id/sigla"
             style="@style/TextAppearance.AppCompat.Display2"
@@ -27,31 +36,17 @@
             android:text="@{estado.sigla}"
             tools:text="PE"/>
 
-        <LinearLayout
-            android:id="@+id/bottom"
+        <TextView
+            android:id="@+id/descricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:layout_gravity="bottom"
+            android:padding="@dimen/default_margin"
+            android:text="@{estado.descricao}"
+            android:textColor="@android:color/white"
             android:background="#33000000"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_margin="@dimen/half_margin"
-                android:src="@{estado.url}"/>
-
-            <TextView
-                android:id="@+id/descricao"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_gravity="center_vertical"
-                android:padding="@dimen/half_margin"
-                android:text="@{estado.descricao}"
-                android:textColor="@android:color/white"
-                tools:text="Pernambuco"/>
-        </LinearLayout>
+            tools:text="Pernambuco"/>
 
     </FrameLayout>
 </layout>

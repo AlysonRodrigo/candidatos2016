@@ -8,4 +8,8 @@
     <string name="vereador">Vereador</string>
     <string name="vice">Vice</string>
     <string name="prefeito">Prefeito</string>
+    <string name="error_loading_municipios">Não foi possível carregar os municípios</string>
+    <string name="reload">Recarregar</string>
+    <string name="search_title">Pesquisar</string>
+    <string name="title_activity_municipio">Município</string>
 </resources>

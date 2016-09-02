@@ -36,4 +36,9 @@ public class Constantes {
             new Estado("SE", "Sergipe"),
             new Estado("TO", "Tocantins")
     };
+
+    public static final String KEY_ESTADO = "estado";
+    public static final String KEY_MUNICIPIOS = "municipios";
+    public static final String KEY_MUNICIPIO = "municipio";
+    public static final String KEY_CARGOS = "cargos";
 }

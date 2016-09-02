@@ -32,7 +32,7 @@ public class MunicipiosAdapter extends RecyclerView.Adapter<MunicipiosAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.binding.setCidade(municipios.get(position));
+        holder.binding.setMunicipio(municipios.get(position));
         holder.binding.executePendingBindings();
     }
 

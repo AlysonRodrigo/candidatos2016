@@ -39,6 +39,7 @@
                     android:scaleType="centerCrop"
                     android:fitsSystemWindows="true"
                     android:src="@{estado.url}"
+                    android:transitionName="bandeira"
                     app:alpha="@{0.6f}"
                     app:layout_collapseMode="parallax" />
 

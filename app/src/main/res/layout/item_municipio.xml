@@ -4,18 +4,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="cidade"
+            name="municipio"
             type="br.com.lucianomedeiros.candidatos2016.ws.model.Municipio"/>
     </data>
 
-    <TextView
-        android:id="@+id/cidade"
+    <android.support.v7.widget.CardView
+        android:id="@+id/municipio_item_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/default_margin"
         android:foreground="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:text="@{cidade.nome}"
-        tools:text="Itambé"
-        style="@style/TextAppearance.AppCompat.Medium"/>
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/descricao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_margin"
+            android:text="@{municipio.nome}"
+            tools:text="Itambé"
+            style="@style/TextAppearance.AppCompat.Medium"/>
+    </android.support.v7.widget.CardView>
+
 </layout>
