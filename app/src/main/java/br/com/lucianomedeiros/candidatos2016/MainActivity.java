@@ -15,6 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +34,9 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+    AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(new PageAdapter(getSupportFragmentManager()));
 
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     @Override
@@ -61,6 +73,33 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /** Called when leaving the activity */
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    /** Called when returning to the activity */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    /** Called before the activity is destroyed */
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
     class PageAdapter extends FragmentStatePagerAdapter {
